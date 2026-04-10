@@ -13,6 +13,16 @@ export default function BookingForm({ price }: { price: number }) {
   const [guests, setGuests] = useState(1);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const calendarRef = useRef<HTMLDivElement>(null);
+  const [monthsToShow, setMonthsToShow] = useState(2);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMonthsToShow(window.innerWidth < 640 ? 1 : 2);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const [dateRange, setDateRange] = useState<Range[]>([
     {
@@ -102,16 +112,16 @@ export default function BookingForm({ price }: { price: number }) {
         <AnimatePresence>
           {isCalendarOpen && (
             <motion.div 
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="absolute top-[80px] right-0 z-50 bg-white dark:bg-navy-dark shadow-[0_8px_28px_rgba(0,0,0,0.15)] rounded-2xl border border-gray-200 dark:border-gray-700 p-4"
+              exit={{ opacity: 0, y: 20 }}
+              className="absolute top-[80px] right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 z-50 bg-white dark:bg-navy-dark shadow-[0_8px_28px_rgba(0,0,0,0.15)] rounded-2xl border border-gray-200 dark:border-gray-700 p-2 sm:p-4 w-[95vw] sm:w-auto overflow-hidden"
             >
               <DateRange
                 ranges={dateRange}
                 onChange={(item) => setDateRange([item.selection])}
-                months={2}
-                direction="horizontal"
+                months={monthsToShow}
+                direction={monthsToShow === 1 ? "vertical" : "horizontal"}
                 minDate={new Date()}
                 showDateDisplay={false}
                 rangeColors={['#111']}

@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import BookingForm from "@/components/BookingForm";
+import { BedDouble, Bath, Square, MapPin, CheckCircle2, Wifi, Coffee, Car, Star, Heart, Share, ChevronLeft, Shield, User, Award, DoorOpen, Sparkles, AirVent, Tv, Utensils, WashingMachine } from "lucide-react";
 import { useParams } from "next/navigation";
 import ImageGalleryModal from "@/components/ImageGalleryModal";
 import ReviewsSection from "@/components/ReviewsSection";
